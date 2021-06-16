@@ -991,19 +991,40 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
     public int parsedOverlayColor() {
         {
-            if(this.overlayColor == null){
+            if (this.overlayColor == null) {
                 return Color.argb(180, 66, 165, 245);
             }
-            Pattern c = Pattern.compile("rgba *\\( *([0-9]+), *([0-9]+), *([0-9]+), *([0-9]\\.?[0-9]?)*\\)");
-            Matcher m = c.matcher(this.overlayColor);
-
-            if (m.matches()) {
-                return Color.argb((int) (255 * Float.valueOf(m.group(4))), Integer.valueOf(m.group(1)),
-                        Integer.valueOf(m.group(2)), Integer.valueOf(m.group(3)));
-            }
-
-            return Color.argb(180, 66, 165, 245);
+            return hexToColor(overlayColor);
+//            Pattern c = Pattern.compile("rgba *\\( *([0-9]+), *([0-9]+), *([0-9]+), *([0-9]\\.?[0-9]?)*\\)");
+//            Matcher m = c.matcher(this.overlayColor);
+//
+//            if (m.matches()) {
+//                return Color.argb((int) (255 * Float.valueOf(m.group(4))), Integer.valueOf(m.group(1)),
+//                        Integer.valueOf(m.group(2)), Integer.valueOf(m.group(3)));
+//            }
+//
+//            return Color.argb(180, 66, 165, 245);
 
         }
+    }
+
+    public static int hexToColor(String hex) {
+        hex = hex.replace("#", "");
+        Log.e("duy", Integer.valueOf(hex.substring(0, 2), 16).toString());
+        switch (hex.length()) {
+            case 6:
+                return Color.argb(
+                        255,
+                        Integer.valueOf(hex.substring(0, 2), 16),
+                        Integer.valueOf(hex.substring(2, 4), 16),
+                        Integer.valueOf(hex.substring(4, 6), 16));
+            case 8:
+                return Color.argb(
+                        Integer.valueOf(hex.substring(0, 2), 16),
+                        Integer.valueOf(hex.substring(2, 4), 16),
+                        Integer.valueOf(hex.substring(4, 6), 16),
+                        Integer.valueOf(hex.substring(6, 8), 16));
+        }
+        return Color.argb(255, 255, 255, 255);
     }
 }

@@ -26,39 +26,39 @@ class DocumentScanner extends StatefulWidget {
   /// onDocumentScanned gets called when the scanner successfully scans a rectangle (document)
   final Function(ScannedImage) onDocumentScanned;
 
-  // final bool documentAnimation;
-  // final String overlayColor;
-  // final int detectionCountBeforeCapture;
+  final bool? documentAnimation;
+  final String? overlayColor;
+  final int? detectionCountBeforeCapture;
   // final int detectionRefreshRateInMS;
-  // final bool enableTorch;
+  final bool? enableTorch;
   // final bool useFrontCam;
-  // final double brightness;
+  final double? brightness;
   // final double saturation;
-  // final double contrast;
+  final double? contrast;
   // final double quality;
   // final bool useBase64;
   // final bool saveInAppDocument;
   // final bool captureMultiple;
-  // final bool manualOnly;
-  // final bool noGrayScale;
+  final bool manualOnly;
+  final bool? noGrayScale;
 
   DocumentScanner({
     required this.onDocumentScanned,
-    // this.documentAnimation,
-    // this.overlayColor,
-    // this.detectionCountBeforeCapture,
+    this.documentAnimation,
+    this.overlayColor, // #2FE329 or #FF2FE329
+    this.detectionCountBeforeCapture,
     // this.detectionRefreshRateInMS,
-    // this.enableTorch,
+    this.enableTorch,
     // this.useFrontCam,
-    // this.brightness,
+    this.brightness,
     // this.saturation,
-    // this.contrast,
+    this.contrast,
     // this.quality,
     // this.useBase64,
     // this.saveInAppDocument,
     // this.captureMultiple,
-    // this.manualOnly,
-    // this.noGrayScale,
+    this.manualOnly = false,
+    this.noGrayScale,
   });
 
   final MethodChannel _channel = const MethodChannel(_methodChannelIdentifier);
@@ -119,26 +119,25 @@ class _DocState extends State<DocumentScanner> {
   }
 
   Map<String, dynamic> _getParams() {
-    // Map<String, dynamic> allParams = {
-    //   "documentAnimation": widget.documentAnimation,
-    //   "overlayColor": widget.overlayColor,
-    //   "detectionCountBeforeCapture": widget.detectionCountBeforeCapture,
-    //   "enableTorch": widget.enableTorch,
-    //   "manualOnly": widget.manualOnly,
-    //   "noGrayScale": widget.noGrayScale,
-    //   "brightness": widget.brightness,
-    //   "contrast": widget.contrast,
-    //   "saturation": widget.saturation,
-    // };
+    Map<String, dynamic> allParams = {
+      "documentAnimation": widget.documentAnimation,
+      "overlayColor": widget.overlayColor,
+      "detectionCountBeforeCapture": widget.detectionCountBeforeCapture,
+      "enableTorch": widget.enableTorch,
+      "manualOnly": widget.manualOnly,
+      "noGrayScale": widget.noGrayScale,
+      "brightness": widget.brightness,
+      "contrast": widget.contrast,
+      // "saturation": widget.saturation,
+    };
 
-    // Map<String, dynamic> nonNullParams = {};
-    // allParams.forEach((key, value) {
-    //   if (value != null) {
-    //     nonNullParams.addAll({key: value});
-    //   }
-    // });
+    Map<String, dynamic> nonNullParams = {};
+    allParams.forEach((key, value) {
+      if (value != null) {
+        nonNullParams.addAll({key: value});
+      }
+    });
 
-    // return nonNullParams;
-    return {};
+    return nonNullParams;
   }
 }
