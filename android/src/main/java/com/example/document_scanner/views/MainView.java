@@ -22,7 +22,9 @@ public class MainView extends FrameLayout {
     }
 
     public static void createInstance(Context context, Activity activity) {
-        instance = new MainView(context, activity);
+        if (instance == null) {
+            instance = new MainView(context, activity);
+        }
     }
 
     private MainView(Context context, Activity activity) {

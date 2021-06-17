@@ -16,6 +16,8 @@ class _MyAppState extends State<MyApp> {
   File? scannedDocument;
   Future<PermissionStatus>? cameraPermissionFuture;
 
+  final _scannerController = DocumentScannerController();
+
   @override
   void initState() {
     cameraPermissionFuture = Permission.camera.request();
@@ -45,6 +47,8 @@ class _MyAppState extends State<MyApp> {
                                     image: FileImage(scannedDocument!),
                                   )
                                 : DocumentScanner(
+                                    controller: _scannerController,
+                                    manualOnly: true,
                                     onDocumentScanned:
                                         (ScannedImage scannedImage) {
                                       print("document : " +
@@ -86,7 +90,14 @@ class _MyAppState extends State<MyApp> {
                 );
               }
             },
-          )),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              _scannerController.captureImage();
+            },
+            child: Icon(Icons.camera),
+          ),
+        ),
     );
   }
 }

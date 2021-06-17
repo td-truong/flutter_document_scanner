@@ -10,6 +10,8 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.example.document_scanner.views.MainView;
+
 import io.flutter.app.FlutterActivity;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
@@ -233,6 +235,11 @@ methodChannel = channel;
       Log.d("debug","success");
       Log.d("debug","sucess");
       result.success("Androiddd " + android.os.Build.VERSION.RELEASE);
+    } else if (methodCall.method.equals("captureImage")) {
+      MainView view = MainView.getInstance();
+      if (view != null) {
+        view.capture();
+      }
     } else {
       result.notImplemented();
     }

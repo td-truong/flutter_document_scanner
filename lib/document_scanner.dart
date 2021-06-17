@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 
+import 'package:document_scanner/document_scanner_controller.dart';
 import 'package:document_scanner/scannedImage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+export 'package:document_scanner/document_scanner_controller.dart';
 export 'package:document_scanner/scannedImage.dart';
 
 const String _methodChannelIdentifier = 'document_scanner';
+const MethodChannel channel = MethodChannel(_methodChannelIdentifier);
 
 /// Document scanner Platform view.
 ///
@@ -42,7 +45,10 @@ class DocumentScanner extends StatefulWidget {
   final bool manualOnly;
   final bool? noGrayScale;
 
+  final DocumentScannerController controller;
+
   DocumentScanner({
+    required this.controller,
     required this.onDocumentScanned,
     this.documentAnimation,
     this.overlayColor, // #2FE329 or #FF2FE329
@@ -61,8 +67,6 @@ class DocumentScanner extends StatefulWidget {
     this.noGrayScale,
   });
 
-  final MethodChannel _channel = const MethodChannel(_methodChannelIdentifier);
-
   @override
   _DocState createState() => _DocState();
 }
@@ -71,7 +75,7 @@ class _DocState extends State<DocumentScanner> {
   @override
   void initState() {
     print("initializing document scanner state");
-    widget._channel.setMethodCallHandler(_onDocumentScanned);
+    channel.setMethodCallHandler(_onDocumentScanned);
     super.initState();
   }
 
