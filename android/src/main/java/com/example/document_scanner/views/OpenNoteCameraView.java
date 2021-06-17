@@ -114,6 +114,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
     private PictureCallback pCallback;
     private boolean scanClicked = false;
     private boolean mVisible;
+    private boolean showSpinner;
 
     private boolean documentAnimation = false;
     private int numberOfRectangles = 15;
@@ -558,7 +559,9 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mWaitSpinner.setVisibility(View.VISIBLE);
+                if (showSpinner) {
+                    mWaitSpinner.setVisibility(View.VISIBLE);
+                }
                 Map data = new HashMap();
                 data.put("processing", true);
                 mThis.processingListener.onProcessingChange(data);
@@ -571,7 +574,9 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
             @Override
             public void run() {
                 // blinkView.setVisibility(View.INVISIBLE);
-                mWaitSpinner.setVisibility(View.INVISIBLE);
+                if (showSpinner) {
+                    mWaitSpinner.setVisibility(View.INVISIBLE);
+                }
                 Map data = new HashMap();
                 data.put("processing", false);
                 mThis.processingListener.onProcessingChange(data);
@@ -970,6 +975,10 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
         mCamera.setParameters(par);
         Log.d(TAG, "flash: " + (stateFlash ? "on" : "off"));
         // */
+    }
+
+    public void setShowSpinner(boolean showSpinner) {
+        this.showSpinner = showSpinner;
     }
 
     @Override

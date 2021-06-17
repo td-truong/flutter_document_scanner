@@ -164,6 +164,14 @@ uiThreadHandler.postAtFrontOfQueue(runnable );
             contrast = 1;
         }
         view.setContrast(contrast);
+
+        boolean showSpinner;
+        if(params.containsKey("showSpinner")){
+            showSpinner =(boolean) params.get("showSpinner");
+        }else{
+            showSpinner = false;
+        }
+        view.setShowSpinner(showSpinner);
     }
 
 

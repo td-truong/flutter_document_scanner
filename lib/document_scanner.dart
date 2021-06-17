@@ -44,6 +44,7 @@ class DocumentScanner extends StatefulWidget {
   // final bool captureMultiple;
   final bool manualOnly;
   final bool? noGrayScale;
+  final bool showSpinner;
 
   final DocumentScannerController controller;
 
@@ -65,6 +66,7 @@ class DocumentScanner extends StatefulWidget {
     // this.captureMultiple,
     this.manualOnly = false,
     this.noGrayScale,
+    this.showSpinner = true,
   });
 
   @override
@@ -133,6 +135,7 @@ class _DocState extends State<DocumentScanner> {
       "brightness": widget.brightness,
       "contrast": widget.contrast,
       // "saturation": widget.saturation,
+      "showSpinner": widget.showSpinner,
     };
 
     Map<String, dynamic> nonNullParams = {};

@@ -94,6 +94,10 @@ public class MainView extends FrameLayout {
         view.setRemoveGrayScale(grayscale);
     }
 
+    public void setShowSpinner(boolean showSpinner) {
+        view.setShowSpinner(showSpinner);
+    }
+
     public void capture() {
         view.capture();
     }
