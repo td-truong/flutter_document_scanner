@@ -220,6 +220,10 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
         mImageProcessor.setRemoveGrayScale(grayscale);
     }
 
+    public void setEnhanceDocument(boolean enhanceDocument) {
+        mImageProcessor.setEnhanceDocument(enhanceDocument);
+    }
+
     public void initOpenCv(Context context) {
 
         mThis = this;

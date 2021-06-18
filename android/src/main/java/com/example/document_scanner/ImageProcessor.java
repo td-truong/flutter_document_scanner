@@ -75,6 +75,7 @@ public class ImageProcessor extends Handler {
     private int numOfSquares = 0;
     private int numOfRectangles = 10;
     private boolean noGrayscale = false;
+    private boolean enhanceDocument = true;
 
     public ImageProcessor(Looper looper, Handler uiHandler, OpenNoteCameraView mainActivity, Context context) {
         super(looper);
@@ -98,6 +99,10 @@ public class ImageProcessor extends Handler {
 
     public void setRemoveGrayScale(boolean grayscale) {
         this.noGrayscale = grayscale;
+    }
+
+    public void setEnhanceDocument(boolean enhanceDocument) {
+        this.enhanceDocument = enhanceDocument;
     }
 
     public void handleMessage(Message msg) {
@@ -232,7 +237,9 @@ public class ImageProcessor extends Handler {
             doc = new Mat(inputRgba.size(), CvType.CV_8UC4);
             inputRgba.copyTo(doc);
         }
-        enhanceDocument(doc);
+        if (enhanceDocument) {
+            enhanceDocument(doc);
+        }
         return sd.setProcessed(doc);
     }
 

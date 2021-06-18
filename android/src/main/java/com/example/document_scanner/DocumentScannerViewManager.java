@@ -172,6 +172,14 @@ uiThreadHandler.postAtFrontOfQueue(runnable );
             showSpinner = false;
         }
         view.setShowSpinner(showSpinner);
+
+        boolean enhanceDocument;
+        if(params.containsKey("enhanceDocument")){
+            enhanceDocument =(boolean) params.get("enhanceDocument");
+        }else{
+            enhanceDocument = false;
+        }
+        view.setEnhanceDocument(enhanceDocument);
     }
 
 

@@ -98,6 +98,10 @@ public class MainView extends FrameLayout {
         view.setShowSpinner(showSpinner);
     }
 
+    public void setEnhanceDocument(boolean enhanceDocument) {
+        view.setEnhanceDocument(enhanceDocument);
+    }
+
     public void capture() {
         view.capture();
     }
