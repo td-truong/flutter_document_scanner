@@ -49,27 +49,26 @@ class DocumentScanner extends StatefulWidget {
 
   final DocumentScannerController controller;
 
-  DocumentScanner({
-    required this.controller,
-    required this.onDocumentScanned,
-    this.documentAnimation,
-    this.overlayColor, // #2FE329 or #FF2FE329
-    this.detectionCountBeforeCapture,
-    // this.detectionRefreshRateInMS,
-    this.enableTorch,
-    // this.useFrontCam,
-    this.brightness,
-    // this.saturation,
-    this.contrast,
-    // this.quality,
-    // this.useBase64,
-    // this.saveInAppDocument,
-    // this.captureMultiple,
-    this.manualOnly = false,
-    this.noGrayScale,
-    this.showSpinner = true,
-    this.enhanceDocument = true
-  });
+  DocumentScanner(
+      {required this.controller,
+      required this.onDocumentScanned,
+      this.documentAnimation,
+      this.overlayColor, // #2FE329 or #FF2FE329
+      this.detectionCountBeforeCapture,
+      // this.detectionRefreshRateInMS,
+      this.enableTorch,
+      // this.useFrontCam,
+      this.brightness,
+      // this.saturation,
+      this.contrast,
+      // this.quality,
+      // this.useBase64,
+      // this.saveInAppDocument,
+      // this.captureMultiple,
+      this.manualOnly = false,
+      this.noGrayScale,
+      this.showSpinner = true,
+      this.enhanceDocument = true});
 
   @override
   _DocState createState() => _DocState();

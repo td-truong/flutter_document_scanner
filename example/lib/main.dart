@@ -28,76 +28,76 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: FutureBuilder<PermissionStatus>(
-            future: cameraPermissionFuture,
-            builder: (BuildContext context,
-                AsyncSnapshot<PermissionStatus> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.data!.isGranted)
-                  return Stack(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Expanded(
-                            child: scannedDocument != null
-                                ? Image(
-                                    image: FileImage(scannedDocument!),
-                                  )
-                                : DocumentScanner(
-                                    controller: _scannerController,
-                                    manualOnly: true,
-                                    onDocumentScanned:
-                                        (ScannedImage scannedImage) {
-                                      print("document : " +
-                                          scannedImage.croppedImage!);
-
-                                      setState(() {
-                                        scannedDocument = scannedImage
-                                            .getScannedDocumentAsFile();
-                                        // imageLocation = image;
-                                      });
-                                    },
-                                  ),
-                          ),
-                        ],
-                      ),
-                      scannedDocument != null
-                          ? Positioned(
-                              bottom: 20,
-                              left: 0,
-                              right: 0,
-                              child: RaisedButton(
-                                  child: Text("retry"),
-                                  onPressed: () {
-                                    setState(() {
-                                      scannedDocument = null;
-                                    });
-                                  }),
-                            )
-                          : Container(),
-                    ],
-                  );
-                else
-                  return Center(
-                    child: Text("camera permission denied"),
-                  );
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              _scannerController.captureImage();
-            },
-            child: Icon(Icons.camera),
-          ),
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
         ),
+        body: FutureBuilder<PermissionStatus>(
+          future: cameraPermissionFuture,
+          builder:
+              (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.data!.isGranted)
+                return Stack(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Expanded(
+                          child: scannedDocument != null
+                              ? Image(
+                                  image: FileImage(scannedDocument!),
+                                )
+                              : DocumentScanner(
+                                  controller: _scannerController,
+                                  manualOnly: true,
+                                  onDocumentScanned:
+                                      (ScannedImage scannedImage) {
+                                    print("document : " +
+                                        scannedImage.croppedImage!);
+
+                                    setState(() {
+                                      scannedDocument = scannedImage
+                                          .getScannedDocumentAsFile();
+                                      // imageLocation = image;
+                                    });
+                                  },
+                                ),
+                        ),
+                      ],
+                    ),
+                    scannedDocument != null
+                        ? Positioned(
+                            bottom: 20,
+                            left: 0,
+                            right: 0,
+                            child: RaisedButton(
+                                child: Text("retry"),
+                                onPressed: () {
+                                  setState(() {
+                                    scannedDocument = null;
+                                  });
+                                }),
+                          )
+                        : Container(),
+                  ],
+                );
+              else
+                return Center(
+                  child: Text("camera permission denied"),
+                );
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _scannerController.captureImage();
+          },
+          child: Icon(Icons.camera),
+        ),
+      ),
     );
   }
 }
