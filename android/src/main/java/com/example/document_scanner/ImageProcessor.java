@@ -74,6 +74,8 @@ public class ImageProcessor extends Handler {
     private ResultPoint[] qrResultPoints;
     private int numOfSquares = 0;
     private int numOfRectangles = 10;
+    private int numOfNoSquares = 0;
+    private int numOfNoSquaresThreshold = 3;
     private boolean noGrayscale = false;
     private boolean enhanceDocument = true;
 
@@ -87,6 +89,10 @@ public class ImageProcessor extends Handler {
 
     public void setNumOfRectangles(int numOfRectangles) {
         this.numOfRectangles = numOfRectangles;
+    }
+
+    public void setNumOfNoSquaresThreshold(int numOfNoSquaresThreshold) {
+        this.numOfNoSquaresThreshold = numOfNoSquaresThreshold;
     }
 
     public void setBrightness(double brightness) {
@@ -263,6 +269,7 @@ public class ImageProcessor extends Handler {
         mPreviewSize = inputRgba.size();
 
         if (quad != null) {
+            numOfNoSquares = 0;
 
             Point[] rescaledPoints = new Point[4];
 
@@ -287,8 +294,11 @@ public class ImageProcessor extends Handler {
 
         }
 
-        mMainActivity.getHUD().clear();
-        mMainActivity.invalidateHUD();
+        numOfNoSquares += 1;
+        if (numOfNoSquares > numOfNoSquaresThreshold) {
+            mMainActivity.getHUD().clear();
+            mMainActivity.invalidateHUD();
+        }
 
         return false;
 

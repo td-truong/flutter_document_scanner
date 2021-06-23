@@ -46,6 +46,7 @@ class DocumentScanner extends StatefulWidget {
   final bool? noGrayScale;
   final bool showSpinner;
   final bool enhanceDocument;
+  final int noSquareCountBeforeRemoveQuad;
 
   final DocumentScannerController controller;
 
@@ -68,7 +69,8 @@ class DocumentScanner extends StatefulWidget {
       this.manualOnly = false,
       this.noGrayScale,
       this.showSpinner = true,
-      this.enhanceDocument = true});
+      this.enhanceDocument = true,
+      this.noSquareCountBeforeRemoveQuad = 3});
 
   @override
   _DocState createState() => _DocState();
@@ -138,6 +140,7 @@ class _DocState extends State<DocumentScanner> {
       // "saturation": widget.saturation,
       "showSpinner": widget.showSpinner,
       "enhanceDocument": widget.enhanceDocument,
+      "noSquareCountBeforeRemoveQuad": widget.noSquareCountBeforeRemoveQuad
     };
 
     Map<String, dynamic> nonNullParams = {};

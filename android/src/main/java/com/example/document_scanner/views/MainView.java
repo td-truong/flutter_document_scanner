@@ -54,6 +54,10 @@ public class MainView extends FrameLayout {
         view.setDetectionCountBeforeCapture(numberOfRectangles);
     }
 
+    public void setNoSquareCountBeforeRemoveQuad(int numOfNotSquaresThreshold) {
+        view.setNoSquareCountBeforeRemoveQuad(numOfNotSquaresThreshold);
+    }
+
     public void setEnableTorch(boolean enable) {
         view.setEnableTorch(enable);
     }

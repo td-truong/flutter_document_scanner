@@ -118,6 +118,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
     private boolean documentAnimation = false;
     private int numberOfRectangles = 15;
+    private int numOfNoSquaresThreshold = 3;
     private Boolean enableTorch = false;
     public String overlayColor = null;
     private View blinkView = null;
@@ -184,6 +185,10 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
     public void setDetectionCountBeforeCapture(int numberOfRectangles) {
         this.numberOfRectangles = numberOfRectangles;
+    }
+
+    public void setNoSquareCountBeforeRemoveQuad(int numOfNoSquaresThreshold) {
+        this.numOfNoSquaresThreshold = numOfNoSquaresThreshold;
     }
 
     public void setEnableTorch(boolean enableTorch) {
@@ -452,6 +457,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
         if (mImageProcessor != null) {
             mImageProcessor.setBugRotate(mBugRotate);
             mImageProcessor.setNumOfRectangles(numberOfRectangles);
+            mImageProcessor.setNumOfNoSquaresThreshold(numOfNoSquaresThreshold);
         }
 
         try {

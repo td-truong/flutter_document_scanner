@@ -119,6 +119,13 @@ uiThreadHandler.postAtFrontOfQueue(runnable );
         }
         view.setDetectionCountBeforeCapture(detectionCountBeforeCapture);
 
+        int noSquareCountBeforeRemoveQuad;
+        if(params.containsKey("noSquareCountBeforeRemoveQuad")){
+            noSquareCountBeforeRemoveQuad =(int) params.get("noSquareCountBeforeRemoveQuad");
+        }else{
+            noSquareCountBeforeRemoveQuad = 15;
+        }
+        view.setNoSquareCountBeforeRemoveQuad(noSquareCountBeforeRemoveQuad);
 
         boolean enableTorch;
         if(params.containsKey("enableTorch")){
