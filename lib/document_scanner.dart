@@ -76,12 +76,21 @@ class DocumentScanner extends StatefulWidget {
   _DocState createState() => _DocState();
 }
 
-class _DocState extends State<DocumentScanner> {
+class _DocState extends State<DocumentScanner> with WidgetsBindingObserver {
+  bool isResumed = true;
+
   @override
   void initState() {
     print("initializing document scanner state");
     channel.setMethodCallHandler(_onDocumentScanned);
+    WidgetsBinding.instance?.addObserver(this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
   }
 
   Future<dynamic> _onDocumentScanned(MethodCall call) async {
@@ -108,22 +117,34 @@ class _DocState extends State<DocumentScanner> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    setState(() {
+      isResumed = (state == AppLifecycleState.resumed) ? true : false;
+    });
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
-      return AndroidView(
-        viewType: _methodChannelIdentifier,
-        creationParamsCodec: const StandardMessageCodec(),
-        creationParams: _getParams(),
-      );
-    } else if (Platform.isIOS) {
-      print("platform ios");
-      return UiKitView(
-        viewType: _methodChannelIdentifier,
-        creationParams: _getParams(),
-        creationParamsCodec: const StandardMessageCodec(),
-      );
+    if (!isResumed) {
+      return Container(color: Colors.black);
     } else {
-      throw ("Current Platform is not supported");
+      if (Platform.isAndroid) {
+        return AndroidView(
+          viewType: _methodChannelIdentifier,
+          creationParamsCodec: const StandardMessageCodec(),
+          creationParams: _getParams(),
+        );
+      } else if (Platform.isIOS) {
+        print("platform ios");
+        return UiKitView(
+          viewType: _methodChannelIdentifier,
+          creationParams: _getParams(),
+          creationParamsCodec: const StandardMessageCodec(),
+        );
+      } else {
+        throw ("Current Platform is not supported");
+      }
     }
   }
 
