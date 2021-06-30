@@ -89,6 +89,7 @@ class _DocState extends State<DocumentScanner> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    channel.setMethodCallHandler(null);
     WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
   }
