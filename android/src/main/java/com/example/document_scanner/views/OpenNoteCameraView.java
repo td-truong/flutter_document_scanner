@@ -115,6 +115,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
     private boolean scanClicked = false;
     private boolean mVisible;
     private boolean showSpinner;
+    private boolean surfaceDestroyed = false;
 
     private boolean documentAnimation = false;
     private int numberOfRectangles = 15;
@@ -387,6 +388,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        surfaceDestroyed = false;
         try {
             int cameraId = findBestCamera();
             mCamera = Camera.open(cameraId);
@@ -506,6 +508,8 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        surfaceDestroyed = true;
+        waitSpinnerInvisible();
         if (mCamera != null) {
             mCamera.stopPreview();
             mCamera.setPreviewCallback(null);
@@ -690,6 +694,10 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
     }
 
     public void saveDocument(ScannedDocument scannedDocument) {
+        if (surfaceDestroyed) {
+            refreshCamera();
+            return;
+        }
 
         Mat doc = (scannedDocument.processed != null) ? scannedDocument.processed : scannedDocument.original;
 
@@ -750,7 +758,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
             mActivity.setResult(Activity.RESULT_OK, intent);
             mActivity.finish();
         } else {
-            animateDocument(fileName, scannedDocument);
+//            animateDocument(fileName, scannedDocument);
 //            addImageToGallery(fileName, mContext);
         }
 
