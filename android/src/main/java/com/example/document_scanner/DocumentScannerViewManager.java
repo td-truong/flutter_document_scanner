@@ -75,6 +75,19 @@ public class DocumentScannerViewManager implements PlatformView {
                 };
                 uiThreadHandler.postAtFrontOfQueue(runnable );
             }
+
+            @Override
+            public void onStartDetectingRectangle() {
+                Handler uiThreadHandler = new Handler(context.getMainLooper());
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+
+                        channel.invokeMethod("onStartDetectingRectangle",null);
+                    }
+                };
+                uiThreadHandler.postAtFrontOfQueue(runnable );
+            }
         });
 
         view.setOnScannerListener(new OpenNoteCameraView.OnScannerListener() {

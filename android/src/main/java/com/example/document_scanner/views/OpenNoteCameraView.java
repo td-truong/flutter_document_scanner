@@ -116,6 +116,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
     private boolean mVisible;
     private boolean showSpinner;
     private boolean surfaceDestroyed = false;
+    private boolean showLookingDocument = true;
 
     private boolean documentAnimation = false;
     private int numberOfRectangles = 15;
@@ -137,6 +138,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
     public interface OnProcessingListener {
         void onProcessingChange(Map path);
+        void onStartDetectingRectangle();
     }
 
     public void setOnScannerListener(OnScannerListener listener) {
@@ -389,6 +391,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         surfaceDestroyed = false;
+        showLookingDocument = true;
         try {
             int cameraId = findBestCamera();
             mCamera = Camera.open(cameraId);
@@ -509,6 +512,7 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         surfaceDestroyed = true;
+        showLookingDocument = false;
         waitSpinnerInvisible();
         if (mCamera != null) {
             mCamera.stopPreview();
@@ -1051,5 +1055,12 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
                         Integer.valueOf(hex.substring(6, 8), 16));
         }
         return Color.argb(255, 255, 255, 255);
+    }
+
+    public void onDetectRectangle() {
+        if (this.showLookingDocument) {
+            this.showLookingDocument = false;
+            this.processingListener.onStartDetectingRectangle();
+        }
     }
 }

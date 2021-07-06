@@ -28,6 +28,7 @@ const MethodChannel channel = MethodChannel(_methodChannelIdentifier);
 class DocumentScanner extends StatefulWidget {
   /// onDocumentScanned gets called when the scanner successfully scans a rectangle (document)
   final Function(ScannedImage) onDocumentScanned;
+  final Function() onStartDetectingRectangle;
 
   final bool? documentAnimation;
   final String? overlayColor;
@@ -53,6 +54,7 @@ class DocumentScanner extends StatefulWidget {
   DocumentScanner(
       {required this.controller,
       required this.onDocumentScanned,
+      required this.onStartDetectingRectangle,
       this.documentAnimation,
       this.overlayColor, // #2FE329 or #FF2FE329
       this.detectionCountBeforeCapture,
@@ -112,6 +114,8 @@ class _DocState extends State<DocumentScanner> with WidgetsBindingObserver {
         // print("scanned image not null");
         widget.onDocumentScanned(scannedImage);
       }
+    } else if (call.method == "onStartDetectingRectangle") {
+      widget.onStartDetectingRectangle();
     }
 
     return;

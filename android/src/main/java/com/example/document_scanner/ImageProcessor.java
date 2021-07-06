@@ -269,6 +269,7 @@ public class ImageProcessor extends Handler {
         mPreviewSize = inputRgba.size();
 
         if (quad != null) {
+            mMainActivity.onDetectRectangle();
             numOfNoSquares = 0;
 
             Point[] rescaledPoints = new Point[4];
