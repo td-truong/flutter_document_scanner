@@ -29,6 +29,7 @@ class DocumentScanner extends StatefulWidget {
   /// onDocumentScanned gets called when the scanner successfully scans a rectangle (document)
   final Function(ScannedImage) onDocumentScanned;
   final Function() onStartDetectingRectangle;
+  final Function() onShowCamera;
 
   final bool? documentAnimation;
   final String? overlayColor;
@@ -55,6 +56,7 @@ class DocumentScanner extends StatefulWidget {
       {required this.controller,
       required this.onDocumentScanned,
       required this.onStartDetectingRectangle,
+      required this.onShowCamera,
       this.documentAnimation,
       this.overlayColor, // #2FE329 or #FF2FE329
       this.detectionCountBeforeCapture,
@@ -116,6 +118,8 @@ class _DocState extends State<DocumentScanner> with WidgetsBindingObserver {
       }
     } else if (call.method == "onStartDetectingRectangle") {
       widget.onStartDetectingRectangle();
+    } else if (call.method == "onShowCamera") {
+      widget.onShowCamera();
     }
 
     return;

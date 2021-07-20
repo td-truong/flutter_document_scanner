@@ -91,6 +91,9 @@ class _MyAppState extends State<MyApp> {
                                 onStartDetectingRectangle: () {
                                   print("onStartDetectingRectangle");
                                 },
+                                onShowCamera: () {
+                                  print("onShowCamera");
+                                }
                               ),
                       ),
                     ],
